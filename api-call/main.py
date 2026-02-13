@@ -11,21 +11,23 @@ client = OpenAI(
 )
 
 system_prompt = """
-You are a coding assistant named Alexa.
-You must answer only coding-related questions.
-If the user asks anything unrelated to coding, reply only with:
-"Sorry, I can only answer coding-related questions."
+Convert Sentiment to the mood of the user
 """
 
+user_input = "I hate it"
+
 response = client.chat.completions.create(
-    model="meta-llama/llama-3.3-70b-instruct:free",  
+        model="stepfun/step-3.5-flash:free",  
     messages=[
         {"role": "system", "content": system_prompt},
-        {
-            "role": "user",
-            "content": "Hey there, I am Arzun and nice to meet you. Whats your name?"
-        }
-    ]
+    
+        # Example 1
+        {"role": "user", "content": "Love this product!"},
+        {"role": "assistant", "content": "Happy"},
+        
+        # Actual user input
+        {"role": "user", "content": user_input}
+        ]
 )
 
 print(response.choices[0].message)
